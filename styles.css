@@ -1,0 +1,81 @@
+
+  
+ body {
+    background-color: #fff; 
+    color: #3b945e; 
+  }
+  
+  .currency-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  .currency-table th, .currency-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .currency-table th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  .currency-table tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .currency-table td {
+    border-right: 1px solid #ddd;
+  }
+  
+  .currency-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .currency-table thead th:last-child {
+    border-right: none;
+  }
+  
+  .currency-table tfoot td {
+    border-top: 1px solid #ddd;
+  }
+  
+  
+  #converter-form {
+    margin-top: 20px;
+  }
+  
+  #converter-form label {
+    margin-right: 10px;
+  }
+  
+  #converter-form input[type="number"],
+  #converter-form select {
+    padding: 6px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #converter-form button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #converter-form button:hover {
+    background-color: #45a049;
+  }
+  
+  #conversion-result {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  
