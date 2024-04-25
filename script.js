@@ -1,48 +1,48 @@
 document.addEventListener("DOMContentLoaded", function() {
- 
   const table = document.getElementById('currency-table');
-  
- 
   const converterForm = document.getElementById('converter-form');
- 
   const sourceCurrencySelect = document.getElementById('source-currency');
   const targetCurrencySelect = document.getElementById('target-currency');
+  const conversionResult = document.getElementById('conversion-result');
 
-  
+  //Przeliczanie walut
   function convertCurrency(amount, sourceCurrency, targetCurrency) {
-    fetch('/rates')
-      .then(response => response.json())
-      .then(data => {
-        const sourceRate = data[sourceCurrency];
-        const targetRate = data[targetCurrency];
-        const result = (amount / sourceRate) * targetRate;
-        const resultElement = document.getElementById('conversion-result');
-        resultElement.textContent = `${amount} ${sourceCurrency} = ${result.toFixed(2)} ${targetCurrency}`;
+    fetch('/convert', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        amount: amount,
+        sourceCurrency: sourceCurrency,
+        targetCurrency: targetCurrency
       })
-      .catch(error => {
-        console.error('Error fetching currencies:', error);
-        alert('Error fetching currencies. Please try again later.');
-      });
+    })
+    .then(response => response.json())
+    .then(data => {
+      conversionResult.textContent = `${amount} ${sourceCurrency} = ${data.result.toFixed(2)} ${targetCurrency}`;
+    })
+    .catch(error => {
+      console.error('Error converting currency:', error);
+      alert('Error converting currency. Please try again later.');
+    });
   }
 
-  
   converterForm.addEventListener('submit', function(event) {
     event.preventDefault();
     const amount = parseFloat(document.getElementById('amount').value);
-    const sourceCurrency = document.getElementById('source-currency').value;
-    const targetCurrency = document.getElementById('target-currency').value;
+    const sourceCurrency = sourceCurrencySelect.value;
+    const targetCurrency = targetCurrencySelect.value;
     convertCurrency(amount, sourceCurrency, targetCurrency);
   });
 
-  
+  // Tabela walut
   function fetchDataAndUpdateTable() {
     fetch('/rates') 
       .then(response => response.json())
       .then(data => {
-        
         table.innerHTML = '';
 
-        
         const selectedCurrencies = ['PLN', 'USD', 'CHF', 'GBP'];
 
         selectedCurrencies.forEach(currency => {
@@ -61,15 +61,13 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   }
 
-  
+//akrualizacja wyboru walut
   function updateCurrencyOptions(data) {
-    
     sourceCurrencySelect.innerHTML = '';
     targetCurrencySelect.innerHTML = '';
 
     const currencies = Object.keys(data);
 
-    
     currencies.forEach(currency => {
       const option = document.createElement('option');
       option.value = currency;
@@ -81,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   fetchDataAndUpdateTable();
 
-  
+  // Aktualizacja walut
   fetch('/rates')
     .then(response => response.json())
     .then(data => {
@@ -91,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
       console.error('Error fetching currencies:', error);
     });
 
+  // Odświeżanie 
   const refreshInterval = 5000; 
   setInterval(fetchDataAndUpdateTable, refreshInterval);
 });
