@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integracja z PayU</title>
+    <link rel="stylesheet" href="payu.css">
+</head>
+<body>
+    <div class="formularz-platnosci">
+    <h1>Dane do płatności</h1>
+    <form id="formularzPlatnosci">
+        <label for="imieNazwisko">Imię Nazwisko</label>
+        <input type="text" id="imieNazwisko" placeholder="ImieNazwisko" pattern="[A-Za-z]{2,} [A-Za-z]{2,}" title="Proszę wprowadzić dwa słowa, każde co najmniej dwuliterowe" required>
+
+        <label for="numerKarty">Numer Karty</label>
+        <input type="text" id="numerKarty" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" inputmode="numeric" pattern="\d{4} \d{4} \d{4} \d{4}" title="Proszę wprowadzić 16 cyfr w formacie XXXX XXXX XXXX XXXX" required>
+
+        <label for="dataWaznosci">Data Ważności</label>
+        <input type="text" id="dataWaznosci" placeholder="MM/RR" maxlength="5" inputmode="numeric" pattern="\d{2}/\d{2}" title="Proszę wprowadzić datę ważności w formacie MM/RR" required>
+
+        <label for="cvv">CVV</label>
+        <input type="password" id="cvv" placeholder="CVV" maxlength="3" inputmode="numeric" pattern="\d{3}" title="Proszę wprowadzić 3 cyfry CVV" required>
+
+        <button type="submit">Zapłać</button>
+    </form>
+    </div>
+    <script src="payu.js"></script>
+</body>
+</html>
